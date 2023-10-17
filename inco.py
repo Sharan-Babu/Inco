@@ -195,7 +195,7 @@ def create_new_order(given_order_details, customer_id):
 
 
 # Create Invoice and Publish it
-#@st.cache_data
+@st.cache_data
 def create_and_publish_invoice(order_id, customer_id):
 	invoice_request = square_client.invoices.create_invoice(
 						body = {
