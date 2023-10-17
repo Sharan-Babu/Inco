@@ -431,7 +431,7 @@ elif selected_page == "Coupons":
 			image_response = QR_code_genai(coupon_link, item_name).content
 		#st.write(f"Order Taken: {order_details}")
 		
-		coupon_text_template = f"""We also have a special coupon for you! You can claim it by clicking the link below or scanning the Image below: <a href={coupon_link}>Coupon Link</a>"""
+		coupon_text_template = f"""We also have a special coupon for you ({coupon_desc})! You can claim it by clicking the link below or scanning the Image below: <a href={coupon_link}>Coupon Link</a>"""
 		email_draft_content = f"""Hi there,\nHere is your payment link for your recent order of: {order_details}.\n<a href={invoice_payment_url}>Payment Link</a>\n{coupon_text_template}"""
 		
 		#st.write(coupon_link)
