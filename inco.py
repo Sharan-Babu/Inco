@@ -72,6 +72,7 @@ def vertexAI_chat(context, prompt, ioarray, selected_temperature = 0):
 # Load Coupons Data stored locally
 with open("coupons.pickle","rb") as file:
     coupons_dictionary = pickle.load(file)
+	sleep(0.1)
 
 
 # Delete Existing Catalog
@@ -90,6 +91,7 @@ def create_new_customer(email_id):
 	#st.write("Checking customer details")
 	
 	st.session_state["latest_customer_email"] = email_id
+	sleep(0.1)
 
 	# First let us check if cutomer already exists to ensure we do not create duplicates
 	result = square_client.customers.search_customers(
@@ -129,6 +131,7 @@ def create_new_order(given_order_details, customer_id):
 	
 	with open("coupons.pickle","rb") as file:
 		coupons_dictionary = pickle.load(file)
+		sleep(0.1)
     
 	#structured_catalog = vertexAI_chat(cat_context, seller_entered_catalog, ioarray).text
 	
@@ -185,6 +188,7 @@ def create_new_order(given_order_details, customer_id):
 	st.session_state["latest_order_id"] = order_id
 	st.session_state["latest_customer_id"] = customer_id
 	st.session_state["latest_order_details"] = given_order_details
+	sleep(0.1)
 	return order_id
 
 #delete_catalog_item("L6EHPLCKSNKUQQMRVWZMAVGK")
@@ -217,6 +221,7 @@ def create_and_publish_invoice(order_id, customer_id):
 	invoice_request_body = invoice_request.body
 	invoice_id = invoice_request_body["invoice"]["id"]
 	invoice_version = invoice_request_body["invoice"]["version"]
+	sleep(0.1)
 
 	# Publish Created Invoice
 	publish_invoice_request = square_client.invoices.publish_invoice(
@@ -228,6 +233,7 @@ def create_and_publish_invoice(order_id, customer_id):
 
 	# Get Invoice Public URL
 	invoice_public_url = publish_invoice_request.body["invoice"]["public_url"]
+	sleep(0.1)
 	return invoice_public_url
 
 
@@ -253,6 +259,7 @@ def new_coupon(order_details):
 	coupon_desc = required_json["coupon_desc"]
 	prefix = "https://incosquare.streamlit.app/"
 	coupon_link = f"{prefix}?customer_id={customer_id}&coupon_condition={coupon_desc}" 
+	sleep(0.1)
 	return (coupon_link, item_name, coupon_desc)	
 
 
