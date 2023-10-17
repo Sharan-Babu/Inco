@@ -379,6 +379,7 @@ if selected_page == "Place Order":
 	    	else:
 	    		with st.spinner("Creating New Order | Talking to Square"):
 		    		po_customer_id = create_new_customer(customer_email)
+				st.session_state["latest_customer_email"] = customer_email
 		    		po_order_id = create_new_order(spoken_order, po_customer_id)
 		    		st.success("Order Placed. Please head to Coupons Page")
 
