@@ -172,6 +172,7 @@ def create_new_order(given_order_details, customer_id):
 													)
 
 	order_id = order_request.body["order"]["id"]
+	st.write(order_request.body)
 	st.session_state["latest_order_id"] = order_id
 	st.session_state["latest_customer_id"] = customer_id
 	st.session_state["latest_order_details"] = given_order_details
