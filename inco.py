@@ -242,7 +242,7 @@ def new_coupon(order_details):
 	required_json = json.loads(str(vertex_chat_output))
 	item_name = required_json["coupon_item"]
 	coupon_desc = required_json["coupon_desc"]
-	prefix = "localhost:8501/"
+	prefix = "https://incosquare.streamlit.app/"
 	coupon_link = f"{prefix}?customer_id={customer_id}&coupon_condition={coupon_desc}" 
 	return (coupon_link, item_name, coupon_desc)	
 
