@@ -72,7 +72,7 @@ def vertexAI_chat(context, prompt, ioarray, selected_temperature = 0):
 # Load Coupons Data stored locally
 with open("coupons.pickle","rb") as file:
     coupons_dictionary = pickle.load(file)
-	sleep(0.1)
+    sleep(0.1)
 
 
 # Delete Existing Catalog
