@@ -148,7 +148,7 @@ def create_new_order(given_order_details, customer_id):
 
 				Order details: 1 large Burger and 2 large Fantas""",
 
-				"""{"line_items":[{"name":"Burger","quantity":"1","note":"Coupon applied: You saved 3$ on Large Burger since you purchased a Large Fanta!","variation_name":"Regular","item_type":"ITEM","base_price_money":{"amount":6,"currency":"USD"}},{"name":"Fanta","quantity":"2","note":"","variation_name":"Large","item_type":"ITEM","base_price_money":{"amount":7,"currency":"USD"}}]}
+				"""{"line_items":[{"name":"Burger","quantity":"1","note":"Coupon applied: You saved 3$ on Large Burger since you purchased a Large Fanta!","variation_name":"Regular","item_type":"ITEM","base_price_money":{"amount":6.00,"currency":"USD"}},{"name":"Fanta","quantity":"2","note":"","variation_name":"Large","item_type":"ITEM","base_price_money":{"amount":7.00,"currency":"USD"}}]}
 				"""]
 
 	structured_order = vertexAI_chat(order_context, order_info, ioarray, 0.4).text
