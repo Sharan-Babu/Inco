@@ -152,9 +152,9 @@ def create_new_order(given_order_details, customer_id):
 				"""]
 
 	structured_order = vertexAI_chat(order_context, order_info, ioarray).text
-	#st.write(structured_order)
+	st.write(structured_order)
 	required_json = json.loads(str(structured_order))["line_items"]
-	#st.write(required_json)
+	st.write(required_json)
 	#["line_items"]
 
 	if customer_id in coupons_dictionary:
