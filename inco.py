@@ -84,10 +84,10 @@ def delete_catalog_item(objectid):
 
 
 # Create new Customer if doesn't exist
-@st.cache_data
+#@st.cache_data
 def create_new_customer(email_id):
 
-	st.write("Checking customer details")
+	#st.write("Checking customer details")
 	
 	st.session_state["latest_customer_email"] = email_id
 
@@ -124,15 +124,24 @@ def create_new_customer(email_id):
 			
 
 # Create new Order
-@st.cache_data
+#@st.cache_data
 def create_new_order(given_order_details, customer_id):
+	
+	with open("coupons.pickle","rb") as file:
+		coupons_dictionary = pickle.load(file)
+    
 	#structured_catalog = vertexAI_chat(cat_context, seller_entered_catalog, ioarray).text
-	order_context = """Give output in given format. You have to determine correct items that were ordered calculate base_price_money values based on if the coupon condition is satisfied."""
+	
+	order_context = """Give output in given format. You have to determine correct items that were ordered calculate base_price_money values based on if the coupon condition is satisfied. You also have to multiply base_price_money by 100 since it is to be given in cents"""
 	
 	if customer_id in coupons_dictionary:
 		current_coupon = coupons_dictionary[customer_id]
 	else:
 		current_coupon = "No Coupon Available"
+
+	#st.write(current_coupon)	
+	#st.write(customer_id)
+	#st.write(coupons_dictionary)
 
 	required_catalog = coupons_dictionary["customer_catalog"]
 	#st.write(required_catalog)		
@@ -148,13 +157,13 @@ def create_new_order(given_order_details, customer_id):
 
 				Order details: 1 large Burger and 2 large Fantas""",
 
-				"""{"line_items":[{"name":"Burger","quantity":"1","note":"Coupon applied: You saved 3$ on Large Burger since you purchased a Large Fanta!","variation_name":"Regular","item_type":"ITEM","base_price_money":{"amount":6.00,"currency":"USD"}},{"name":"Fanta","quantity":"2","note":"","variation_name":"Large","item_type":"ITEM","base_price_money":{"amount":7.00,"currency":"USD"}}]}
+				"""{"line_items":[{"name":"Burger","quantity":"1","note":"Coupon applied: You saved 3$ on Large Burger since you purchased a Large Fanta!","variation_name":"Regular","item_type":"ITEM","base_price_money":{"amount":600,"currency":"USD"}},{"name":"Fanta","quantity":"2","note":"","variation_name":"Large","item_type":"ITEM","base_price_money":{"amount":700,"currency":"USD"}}]}
 				"""]
 
 	structured_order = vertexAI_chat(order_context, order_info, ioarray, 0.4).text
-	st.write(structured_order)
+	#st.write(structured_order)
 	required_json = json.loads(str(structured_order))["line_items"]
-	st.write(required_json)
+	#st.write(required_json)
 	#["line_items"]
 
 	if customer_id in coupons_dictionary:
@@ -172,7 +181,7 @@ def create_new_order(given_order_details, customer_id):
 													)
 
 	order_id = order_request.body["order"]["id"]
-	st.write(order_request.body)
+	#st.write(order_request.body)
 	st.session_state["latest_order_id"] = order_id
 	st.session_state["latest_customer_id"] = customer_id
 	st.session_state["latest_order_details"] = given_order_details
@@ -182,7 +191,7 @@ def create_new_order(given_order_details, customer_id):
 
 
 # Create Invoice and Publish it
-@st.cache_data
+#@st.cache_data
 def create_and_publish_invoice(order_id, customer_id):
 	invoice_request = square_client.invoices.create_invoice(
 						body = {
@@ -223,21 +232,20 @@ def create_and_publish_invoice(order_id, customer_id):
 
 
 # Generate New Coupon
-@st.cache_data
+#@st.cache_data
 def new_coupon(order_details):
 	customer_id = st.session_state["latest_customer_id"]
 	#structured_order = vertexAI_chat(order_context, order_info, ioarray)
 	new_coupon_context = """You will be given details about a Shop catalog and a user's latest order. Based on that suggest a new coupon that can be given to the user such that it incentives the user to shop again or try a new product. Follow structure of given examples."""
 	ioarray = ["""Shop Catalog:
-				Pizza: Regular is 6$, Large is 9$
-				Coke: Small costs 3$, Large would be 7$ and a medium one for 5$ 
-				
-				Order details: 1 large pizza and 2 large cokes
-				""",
+				Burger: Regular 5$, Large 9$
+				Fanta: Small 3$, Large 7$
+
+				Order details: 1 large Burger and 2 large Fantas""",
 				"""
-				{"coupon_item":"Large Pizza","coupon_desc":"Decrease 2$ on Large pizza base_price if garlic bread is also purchased"}
+				{"coupon_item":"Large Burger","coupon_desc":"Decrease 3$ on Large Burger base_price if a Large Fanta is also bought"}
 				"""]
-	temperature = 0.2
+	temperature = 0
 	message = f"""Shop Catalog:\n{coupons_dictionary["customer_catalog"]}\n\nOrder details: {order_details}"""
 	vertex_chat_output = vertexAI_chat(new_coupon_context, message, ioarray, temperature).text	
 	required_json = json.loads(str(vertex_chat_output))
@@ -252,9 +260,13 @@ def new_coupon(order_details):
 # Check if Coupon Link
 query_params = st.experimental_get_query_params()
 if "customer_id" in query_params:
-	coupons_dictionary["customer_id"] = query_params["coupon_condition"]
+	coupons_dictionary[query_params["customer_id"][0]] = query_params["coupon_condition"][0]
 	st.success("Your Coupon has been claimed! It will applied on the next eligible order. Thanks!")
 	st.balloons()
+	#st.write(coupons_dictionary)
+	with open("coupons.pickle","wb") as file:
+		pickle.dump(coupons_dictionary, file)
+
 	sleep(10)
 
 
@@ -327,6 +339,7 @@ selected_page = st.sidebar.radio("Pages",["Essential Business Info","Place Order
 
 # Place Order Page Logic
 if selected_page == "Place Order":
+	#st.write(coupons_dictionary)
 	st.header("Place Order")
 	st.divider()
 
@@ -406,12 +419,16 @@ elif selected_page == "Coupons":
 
 		coupon_link, item_name, coupon_desc = new_coupon(order_details)
 		coupon_link = coupon_link.replace(" ","%20")
+		
 		with st.spinner("Generating Special Coupon Scan Code"):
 			image_response = QR_code_genai(coupon_link, item_name).content
 		#st.write(f"Order Taken: {order_details}")
+		
 		coupon_text_template = f"""We also have a special coupon for you! You can claim it by clicking the link below or scanning the Image below: <a href={coupon_link}>Coupon Link</a>"""
 		email_draft_content = f"""Hi there,\nHere is your payment link for your recent order of: {order_details}.\n<a href={invoice_payment_url}>Payment Link</a>\n{coupon_text_template}"""
-		st.write(coupon_link)
+		
+		#st.write(coupon_link)
+		
 		email_text = st.text_area("Email Body",email_draft_content, height = 200)
 		st.caption("Links and Images will be formatted and placed automatically")
 
