@@ -127,7 +127,7 @@ def create_new_customer(email_id):
 @st.cache_data
 def create_new_order(given_order_details, customer_id):
 	#structured_catalog = vertexAI_chat(cat_context, seller_entered_catalog, ioarray).text
-	order_context = """For given Order details and Catalog and Coupon Condition, give output in given format. Use logic as shown. You have to calculate base_price_money values based on if the coupon condition is satisfied."""
+	order_context = """Give output in given format. You have to determine correct items that were ordered calculate base_price_money values based on if the coupon condition is satisfied."""
 	
 	if customer_id in coupons_dictionary:
 		current_coupon = coupons_dictionary[customer_id]
@@ -151,7 +151,7 @@ def create_new_order(given_order_details, customer_id):
 				"""{"line_items":[{"name":"Burger","quantity":"1","note":"Coupon applied: You saved 3$ on Large Burger since you purchased a Large Fanta!","variation_name":"Regular","item_type":"ITEM","base_price_money":{"amount":6,"currency":"USD"}},{"name":"Fanta","quantity":"2","note":"","variation_name":"Large","item_type":"ITEM","base_price_money":{"amount":7,"currency":"USD"}}]}
 				"""]
 
-	structured_order = vertexAI_chat(order_context, order_info, ioarray).text
+	structured_order = vertexAI_chat(order_context, order_info, ioarray, 0.4).text
 	st.write(structured_order)
 	required_json = json.loads(str(structured_order))["line_items"]
 	st.write(required_json)
