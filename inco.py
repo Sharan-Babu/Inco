@@ -469,7 +469,7 @@ elif selected_page == "Essential Business Info":
 		result = return_catalog()
 	#st.write(result)
 	if result.is_success():
-		if len(result.body) == 0:
+		if len(result.body) != 0:
 			st.info("Please create a Catalog")
 
 			seller_entered_catalog = st.text_area("My Catalog","",placeholder="Products, Taxes, combos info...")
