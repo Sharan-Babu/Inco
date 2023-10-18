@@ -12,7 +12,7 @@ Innovating Order placement and incentives through coupons for sellers!
 **Square Sandbox application ID**: sandbox-sq0idb-jDGx7GKbfZ7HdlurPag4gg
 
 ---
-Participating in this Hackathon was a delightful experience for our team thanks to the ample help and resources provided. The Square Documentation is very clear and the API explorer is excellent, making it very easy to test different APIs, understand the requirements of input parameters for each API and plan how it will integrate in the application.
+Participating in this Hackathon was a delightful experience for our team thanks to the ample help and resources provided. The Square Documentation is very clear and the API explorer is excellent, making it easy to test different APIs, understand the requirements of input parameters for each API and plan how it will integrate in the application.
 
 ---
 
