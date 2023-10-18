@@ -1,9 +1,11 @@
 # Inco
 Innovating Order placement and incentives through coupons for sellers!
 
+**Web App Link**: https://incosquare.streamlit.app/
+
 **Devpost Link**: https://devpost.com/software/inco
 
-**Youtube Link**: https://www.youtube.com/watch?v=Uc3zUBmQDgU
+**Youtube Demo**: https://www.youtube.com/watch?v=Uc3zUBmQDgU
 
 **Google Cloud Project ID**: square-hackathon-401819
 
