@@ -9,12 +9,12 @@ Innovating Order placement and incentives through coupons for sellers!
 
 **Square Sandbox application ID**: sandbox-sq0idb-jDGx7GKbfZ7HdlurPag4gg
 
+
 ## Helpful References:
 
-- https://developer.squareup.com/docs/devtools/sandbox/overview
-- https://developer.squareup.com/us/en
-- https://discuss.streamlit.io/t/streamlit-app-authenticate-with-google-cloud-document-ai/45722/3
-- https://developer.squareup.com/explorer/square/customers-api/search-customers
-- https://developer.squareup.com/explorer/square/orders-api/create-order
-- https://developer.squareup.com/explorer/square/invoices-api/create-invoice
-- https://developer.squareup.com/docs/invoices-api/walkthrough
+- [Invoices Complete Walkthrough](https://developer.squareup.com/docs/invoices-api/walkthrough)
+- [Vertex AI Youtube Video](https://www.youtube.com/watch?v=I7UiSU96CLc)
+- [Square Sandbox 101 Youtube Playlist](https://youtube.com/playlist?list=PLKxvFH5604ZFfDScdkdXQiHcqSmwmGjQb&si=1eCFXuZxjs0ilxSq)
+- [Square Sandbox Overview](https://developer.squareup.com/docs/devtools/sandbox/overview)
+- [Square Official Docs](https://developer.squareup.com/docs)
+- [Connecting GCP with Streamlit Frontend](https://discuss.streamlit.io/t/streamlit-app-authenticate-with-google-cloud-document-ai/45722/3)
