@@ -12,7 +12,7 @@ Innovating Order placement and incentives through coupons for sellers!
 **Square Sandbox application ID**: sandbox-sq0idb-jDGx7GKbfZ7HdlurPag4gg
 
 ---
-You can run the web app on your local system by running following commands:
+You can run the web app on your local system by running the following commands:
 ~~~console
 git clone https://github.com/Sharan-Babu/Inco.git
 cd Inco
