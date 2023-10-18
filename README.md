@@ -12,6 +12,15 @@ Innovating Order placement and incentives through coupons for sellers!
 **Square Sandbox application ID**: sandbox-sq0idb-jDGx7GKbfZ7HdlurPag4gg
 
 ---
+You can run the web app on your local system by running following commands:
+~~~console
+git clone https://github.com/Sharan-Babu/Inco.git
+cd Inco
+python -m pip install -r requirements.txt
+streamlit run inco.py
+~~~
+
+---
 Participating in this Hackathon was a delightful experience for our team thanks to the ample help and resources provided. The Square Documentation is very clear and the API explorer is excellent, making it easy to test different APIs, understand the requirements of input parameters for each API and plan how it will integrate in the application.
 
 ---
